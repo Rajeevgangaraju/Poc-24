@@ -1,0 +1,26 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging into ECR...
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 860801567613.dkr.ecr.us-east-1.amazonaws.com
+
+  build:
+    commands:
+      - echo Build Docker image
+      - docker build -t poc-24-app .
+
+  post_build:
+    commands:
+      - echo Tag image
+      - docker tag poc-24-app:latest 860801567613.dkr.ecr.us-east-1.amazonaws.com/poc-24-app:latest
+      - echo Push image
+      - docker push 860801567613.dkr.ecr.us-east-1.amazonaws.com/poc-24-app:latest
+      - echo Writing image definitions
+      - printf '[{"name":"poc-24-container","imageUri":"%s"}]' 860801567613.dkr.ecr.us-east-1.amazonaws.com/poc-24-app:latest > imagedefinitions.json
+
+artifacts:
+  files:
+    - imagedefinitions.json
+``

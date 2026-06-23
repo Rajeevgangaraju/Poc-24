@@ -1,12 +1,10 @@
-const express = require('express');
-const app = express();
+const http = require("http");
 
-const PORT = 8080;
-
-app.get('/', (req, res) => {
-  res.send('POC-24 is running successfully 🚀');
+const server = http.createServer((req, res) => {
+  res.write("Hello from ECS Fargate ");
+  res.end();
 });
 
-app.listen(PORT, () => {
-  console.log('Server running on port ' + PORT);
+server.listen(3000, () => {
+  console.log("Server running on port 3000");
 });

@@ -1,7 +1,7 @@
 const http = require("http");
 
 const server = http.createServer((req, res) => {
-  res.write("Hello from ECS Fargate ");
+  res.write("Hello from ECS Fargate. This is my Poc-24 ");
   res.end();
 });
 
